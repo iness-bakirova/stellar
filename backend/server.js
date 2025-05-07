@@ -14,9 +14,7 @@ const app = express();
 // Middleware to handle CORS
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'production' 
-      ? 'https://stellarplan.netlify.app' 
-      : process.env.CLIENT_URL || "*",
+    origin: ['https://stellar-nu.vercel.app', 'http://localhost:5173'],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
@@ -38,6 +36,11 @@ app.use("/api/reports", reportRoutes);
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Health check endpoint
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
+
 // Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
