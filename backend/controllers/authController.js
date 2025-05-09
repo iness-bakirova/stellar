@@ -156,11 +156,12 @@ const updateProfile = async (req, res) => {
     }
 
     // Проверяем, не занят ли email другим пользователем
-    if (email !== user.email) {
+    if (email && email !== user.email) {
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({ message: "Этот email уже используется" });
       }
+      user.email = email;
     }
 
     // Если меняется пароль
@@ -173,17 +174,17 @@ const updateProfile = async (req, res) => {
     }
 
     // Обновляем остальные поля
-    user.name = name;
-    user.email = email;
-    if (profileImageUrl) {
-      user.profileImageUrl = profileImageUrl;
-    }
+    if (name) user.name = name;
+    if (profileImageUrl) user.profileImageUrl = profileImageUrl;
 
     await user.save();
 
     // Возвращаем обновленные данные пользователя
     const updatedUser = await User.findById(userId).select("-password");
-    res.json(updatedUser);
+    res.json({
+      ...updatedUser.toObject(),
+      token: generateToken(updatedUser._id)
+    });
   } catch (error) {
     console.error("Ошибка при обновлении профиля:", error);
     res.status(500).json({ message: "Ошибка сервера при обновлении профиля" });
