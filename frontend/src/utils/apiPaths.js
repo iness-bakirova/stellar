@@ -8,7 +8,7 @@ export const API_PATHS = {
     GET_PROFILE: "/api/auth/profile", // Get logged-in user details
     FORGOT_PASSWORD: "/api/auth/forgot-password",
     RESET_PASSWORD: "/api/auth/reset-password",
-    UPDATE_PROFILE: "/api/auth/profile", // Добавляем путь для обновления профиля
+    UPDATE_PROFILE: "/api/auth/update-profile", // Обновленный путь для обновления профиля
   },
 
   USERS: {
