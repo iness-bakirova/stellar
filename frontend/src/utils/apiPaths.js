@@ -22,6 +22,7 @@ export const API_PATHS = {
   TASKS: {
     GET_DASHBOARD_DATA: "/api/tasks/dashboard",
     GET_USER_DASHBOARD_DATA: "/api/tasks/user-dashboard-data", // Get User Dashboard Data
+    GET_DASHBOARD_STATS: "/api/tasks/dashboard-stats", // Добавляем путь для получения статистики
     GET_ALL_TASKS: "/api/tasks",
     GET_TASK_BY_ID: (id) => `/api/tasks/${id}`,
     CREATE_TASK: "/api/tasks",

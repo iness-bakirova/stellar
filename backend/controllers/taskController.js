@@ -1,4 +1,5 @@
 const Task = require("../models/Task");
+const User = require("../models/User");
 
 // @desc    Get all tasks (Admin: all, User: only assigned tasks)
 // @route   GET /api/tasks/
@@ -417,6 +418,78 @@ const getUserDashboardData = async (req, res) => {
   }
 };
 
+// Get dashboard statistics
+const getDashboardStats = async (req, res) => {
+  try {
+    const totalTasks = await Task.countDocuments();
+    const completedTasks = await Task.countDocuments({ status: "completed" });
+    const pendingTasks = await Task.countDocuments({ status: "pending" });
+    const totalUsers = await User.countDocuments();
+    const activeUsers = await User.countDocuments({ isActive: true });
+
+    // Get tasks by status
+    const tasksByStatus = await Task.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          status: "$_id",
+          count: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    // Get tasks by priority
+    const tasksByPriority = await Task.aggregate([
+      {
+        $group: {
+          _id: "$priority",
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          priority: "$_id",
+          count: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    // Get recent activity
+    const recentActivity = await Task.find()
+      .sort({ updatedAt: -1 })
+      .limit(10)
+      .populate("assignedTo", "name")
+      .lean();
+
+    const formattedActivity = recentActivity.map((task) => ({
+      description: `Задача "${task.title}" обновлена`,
+      timestamp: task.updatedAt,
+      user: task.assignedTo?.name || "Не назначено",
+    }));
+
+    res.json({
+      totalTasks,
+      completedTasks,
+      pendingTasks,
+      totalUsers,
+      activeUsers,
+      tasksByStatus,
+      tasksByPriority,
+      recentActivity: formattedActivity,
+    });
+  } catch (error) {
+    console.error("Error getting dashboard stats:", error);
+    res.status(500).json({ message: "Ошибка при получении статистики" });
+  }
+};
+
 module.exports = {
   getTasks,
   getTaskById,
@@ -427,4 +500,5 @@ module.exports = {
   updateTaskChecklist,
   getDashboardData,
   getUserDashboardData,
+  getDashboardStats,
 };
