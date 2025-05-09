@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from "react-router-dom";
-import Dashboard from "./pages/Admin/Dashboard";
+import AdminDashboard from "./pages/Admin/AdminDashboard";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ManageTasks from "./pages/Admin/ManageTasks";
 import CreateTask from "./pages/Admin/CreateTask";
 import ManageUsers from "./pages/Admin/ManageUsers";
+import AdminSettings from "./pages/Admin/AdminSettings";
 
 import UserDashboard from "./pages/User/UserDashboard";
 import MyTasks from "./pages/User/MyTasks";
@@ -30,11 +31,11 @@ const App = () => {
 
             {/* Admin Routes */}
             <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/admin/tasks" element={<ManageTasks />} />
               <Route path="/admin/create-task" element={<CreateTask />} />
               <Route path="/admin/users" element={<ManageUsers />} />
-              <Route path="/admin/settings" element={<Settings />} />
+              <Route path="/admin/settings" element={<AdminSettings />} />
             </Route>
 
             {/* User Routes */}

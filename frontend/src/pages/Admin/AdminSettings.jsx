@@ -51,10 +51,11 @@ const AdminSettings = () => {
             <h3 className="text-lg font-medium mb-4">Основные настройки</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label htmlFor="systemName" className="block text-sm font-medium text-gray-700">
                   Название системы
                 </label>
                 <input
+                  id="systemName"
                   type="text"
                   name="systemName"
                   value={formData.systemName}
@@ -64,10 +65,11 @@ const AdminSettings = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">
+                <label htmlFor="maxFileSize" className="block text-sm font-medium text-gray-700">
                   Максимальный размер файла (МБ)
                 </label>
                 <input
+                  id="maxFileSize"
                   type="number"
                   name="maxFileSize"
                   value={formData.maxFileSize}
@@ -84,26 +86,28 @@ const AdminSettings = () => {
             <div className="space-y-4">
               <div className="flex items-center">
                 <input
+                  id="enableNotifications"
                   type="checkbox"
                   name="enableNotifications"
                   checked={formData.enableNotifications}
                   onChange={handleChange}
                   className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
-                <label className="ml-2 block text-sm text-gray-700">
+                <label htmlFor="enableNotifications" className="ml-2 block text-sm text-gray-700">
                   Включить уведомления в системе
                 </label>
               </div>
 
               <div className="flex items-center">
                 <input
+                  id="enableEmailNotifications"
                   type="checkbox"
                   name="enableEmailNotifications"
                   checked={formData.enableEmailNotifications}
                   onChange={handleChange}
                   className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
-                <label className="ml-2 block text-sm text-gray-700">
+                <label htmlFor="enableEmailNotifications" className="ml-2 block text-sm text-gray-700">
                   Включить email-уведомления
                 </label>
               </div>
@@ -116,13 +120,14 @@ const AdminSettings = () => {
             <div className="space-y-4">
               <div className="flex items-center">
                 <input
+                  id="maintenanceMode"
                   type="checkbox"
                   name="maintenanceMode"
                   checked={formData.maintenanceMode}
                   onChange={handleChange}
                   className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
                 />
-                <label className="ml-2 block text-sm text-gray-700">
+                <label htmlFor="maintenanceMode" className="ml-2 block text-sm text-gray-700">
                   Включить режим обслуживания
                 </label>
               </div>
