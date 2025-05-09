@@ -36,6 +36,9 @@ app.use("/api/reports", reportRoutes);
 // Serve uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// Serve static files from the uploads directory
+app.use('/uploads', express.static('/app/uploads'));
+
 // Health check endpoint
 app.get("/", (req, res) => {
   res.send("API is running");
