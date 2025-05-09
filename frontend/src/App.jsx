@@ -23,6 +23,7 @@ const App = () => {
       <div>
         <Router>
           <Routes>
+            {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -33,18 +34,22 @@ const App = () => {
               <Route path="/admin/tasks" element={<ManageTasks />} />
               <Route path="/admin/create-task" element={<CreateTask />} />
               <Route path="/admin/users" element={<ManageUsers />} />
+              <Route path="/admin/settings" element={<Settings />} />
             </Route>
 
             {/* User Routes */}
-            <Route path="/user" element={<PrivateRoute />}>
-              <Route path="dashboard" element={<UserDashboard />} />
-              <Route path="my-tasks" element={<MyTasks />} />
-              <Route path="task-details/:id" element={<ViewTaskDetails />} />
-              <Route path="settings" element={<Settings />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/user/dashboard" element={<UserDashboard />} />
+              <Route path="/user/my-tasks" element={<MyTasks />} />
+              <Route path="/user/task-details/:id" element={<ViewTaskDetails />} />
+              <Route path="/user/settings" element={<Settings />} />
             </Route>
 
-             {/* Default Route */}
+            {/* Default Route */}
             <Route path="/" element={<Root />} />
+
+            {/* 404 Route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
       </div>
@@ -66,7 +71,7 @@ export default App;
 const Root = () => {
   const { user, loading } = useContext(UserContext);
 
-  if(loading) return <Outlet />
+  if(loading) return null;
   
   if (!user) {
     return <Navigate to="/login" />;
