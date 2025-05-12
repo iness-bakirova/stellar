@@ -34,11 +34,6 @@ const SideMenu = ({ activeMenu, isExpanded, onToggleExpand }) => {
       icon: <LuPlus className="text-xl" />,
       path: "/admin/create-task",
     },
-    {
-      label: "Настройки",
-      icon: <LuSettings className="text-xl" />,
-      path: "/admin/settings",
-    },
   ];
 
   const userMenuItems = [
